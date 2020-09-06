@@ -6,7 +6,6 @@
 #include <conio.h>
 
 
-
 class Field
 {
 private:
@@ -750,6 +749,7 @@ int main()
     //setlocale(LC_ALL, "");
     //SetConsoleCP(1251);
     //SetConsoleOutputCP(1251);
+
     bool isGame = true;
 
     Field tetris;
@@ -766,10 +766,10 @@ int main()
     int score = 0;
     int level = 1;
 
-    int nextFig = rand() % 7;
-
     long core = std::chrono::system_clock::now().time_since_epoch().count();
     srand(core);
+
+    int nextFig = rand() % 7;
 
     while (isGame)
     {      
