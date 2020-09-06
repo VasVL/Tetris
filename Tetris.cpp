@@ -476,17 +476,24 @@ public:
     }
 
     //  Направление поворота: r - по часовой, l - против часовой
-    void Rotate(figureName fName, char direction)
+    void Rotate(char direction)
     {
-        switch (fName)
+        switch (name)
         {
         case figureName::figI:
             if (positionY < 17) //  Чтоб под пол не провалиться
                 ChangeFigure(figIRot, figureName::figIRot);
             break;
         case figureName::figIRot:
-            if ((positionX > 0) && (positionX < 8))    //  Чтоб не вылезти за стены
-                ChangeFigure(figI, figureName::figI);
+            if (positionX == 0)
+                ++positionX; 
+            else
+            if (positionX == 8)
+                --positionX;
+            else
+            if (positionX == 9)
+                positionX -= 2;
+            ChangeFigure(figI, figureName::figI);
             break;
         case figureName::figT:
             if (direction == 'r')
@@ -495,13 +502,12 @@ public:
                 ChangeFigure(figTRotX3, figureName::figTRotX3);
             break;
         case figureName::figTRot:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figTRotX2, figureName::figTRotX2);
-                else
-                    ChangeFigure(figT, figureName::figT);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figTRotX2, figureName::figTRotX2);
+            else
+                ChangeFigure(figT, figureName::figT);
             break;
         case figureName::figTRotX2:
             if (direction == 'r')
@@ -510,13 +516,12 @@ public:
                 ChangeFigure(figTRot, figureName::figTRot);
             break;
         case figureName::figTRotX3:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figT, figureName::figT);
-                else
-                    ChangeFigure(figTRotX2, figureName::figTRotX2);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figT, figureName::figT);
+            else
+                ChangeFigure(figTRotX2, figureName::figTRotX2);
             break;
         case figureName::figSeven:
             if (direction == 'r')
@@ -525,13 +530,12 @@ public:
                 ChangeFigure(figSevenRotX3, figureName::figSevenRotX3);
             break;
         case figureName::figSevenRot:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figSevenRotX2, figureName::figSevenRotX2);
-                else
-                    ChangeFigure(figSeven, figureName::figSeven);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figSevenRotX2, figureName::figSevenRotX2);
+            else
+                ChangeFigure(figSeven, figureName::figSeven);
             break;
         case figureName::figSevenRotX2:
             if (direction == 'r')
@@ -540,13 +544,12 @@ public:
                 ChangeFigure(figSevenRot, figureName::figSevenRot);
             break;
         case figureName::figSevenRotX3:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figSeven, figureName::figSeven);
-                else
-                    ChangeFigure(figSevenRotX2, figureName::figSevenRotX2);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figSeven, figureName::figSeven);
+            else
+                ChangeFigure(figSevenRotX2, figureName::figSevenRotX2);
             break;
         case figureName::figSevenL:
             if (direction == 'r')
@@ -555,13 +558,12 @@ public:
                 ChangeFigure(figSevenLRotX3, figureName::figSevenLRotX3);
             break;
         case figureName::figSevenLRot:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figSevenLRotX2, figureName::figSevenLRotX2);
-                else
-                    ChangeFigure(figSevenL, figureName::figSevenL);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figSevenLRotX2, figureName::figSevenLRotX2);
+            else
+                ChangeFigure(figSevenL, figureName::figSevenL);
             break;
         case figureName::figSevenLRotX2:
             if (direction == 'r')
@@ -570,26 +572,27 @@ public:
                 ChangeFigure(figSevenLRot, figureName::figSevenLRot);
             break;
         case figureName::figSevenLRotX3:
-            if (positionX > 0)
-            {
-                if (direction == 'r')
-                    ChangeFigure(figSevenL, figureName::figSevenL);
-                else
-                    ChangeFigure(figSevenLRotX2, figureName::figSevenLRotX2);
-            }
+            if (positionX == 0)
+                ++positionX;
+            if (direction == 'r')
+                ChangeFigure(figSevenL, figureName::figSevenL);
+            else
+                ChangeFigure(figSevenLRotX2, figureName::figSevenLRotX2);
             break;
         case figureName::figZ:
             ChangeFigure(figZRot, figureName::figZRot);
             break;
         case figureName::figZRot:
-            if (positionX > 0)
+            if (positionX == 0)
+                ++positionX;
                 ChangeFigure(figZ, figureName::figZ);
             break;
         case figureName::figZL:
             ChangeFigure(figZLRot, figureName::figZLRot);
             break;
         case figureName::figZLRot:
-            if (positionX > 0)
+            if (positionX == 0)
+                ++positionX;
                 ChangeFigure(figZL, figureName::figZL);
             break;
         default:
@@ -648,26 +651,38 @@ int main()
             timeCheckEndRot = std::chrono::system_clock::now();
             if (GetAsyncKeyState(65) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndRot - timeCheckStartRot).count() > timeForRotate))
             {       //      65 - A
-                figure.Rotate(figure.getFigureName(), 'l');
-                timeCheckStartRot = std::chrono::system_clock::now();
+                //if (!tetris.isWallCollision(x, y, , 'l'), figure.getSize()))
+                {
+                    figure.Rotate('l');
+                    x = figure.getPositionX();
+                    timeCheckStartRot = std::chrono::system_clock::now();
+                }
             }
             if (GetAsyncKeyState(68) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndRot - timeCheckStartRot).count() > timeForRotate))
             {       //      68 - D
-                figure.Rotate(figure.getFigureName(), 'r');
-                timeCheckStartRot = std::chrono::system_clock::now();
+                //if (!tetris.isWallCollision(x, y, , 'r'), figure.getSize()))
+                {
+                    figure.Rotate('r');
+                    x = figure.getPositionX();
+                    timeCheckStartRot = std::chrono::system_clock::now();
+                }
             }
             timeCheckEndMove = std::chrono::system_clock::now();
             if (GetAsyncKeyState(VK_LEFT) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndMove - timeCheckStartMove).count() > timeForMove))
             {
-                if(!tetris.isWallCollision(x-1, y, figure.getFigure(), figure.getSize()))
+                if (!tetris.isWallCollision(x - 1, y, figure.getFigure(), figure.getSize()))
+                {
                     figure.setPosition(--x, y);
-                timeCheckStartMove = std::chrono::system_clock::now();
+                    timeCheckStartMove = std::chrono::system_clock::now();
+                }
             }
             if (GetAsyncKeyState(VK_RIGHT) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndMove - timeCheckStartMove).count() > timeForMove))
             {
-                if (!tetris.isWallCollision(x+1, y, figure.getFigure(), figure.getSize()))
+                if (!tetris.isWallCollision(x + 1, y, figure.getFigure(), figure.getSize()))
+                {
                     figure.setPosition(++x, y);
-                timeCheckStartMove = std::chrono::system_clock::now();
+                    timeCheckStartMove = std::chrono::system_clock::now();
+                }
             }
             timeEnd = std::chrono::system_clock::now();
             if ((std::chrono::duration_cast<std::chrono::milliseconds>(abs(timeEnd - timeStart)).count() > gameSpeed))
@@ -688,9 +703,9 @@ int main()
             tetris.ClearField();
             
             //  Минипуляции со счётом, уровнем и кадром при заполнении строки
-            const std::string* test = tetris.getFullField();
+            const std::string* checkForFillingField = tetris.getFullField();
             for(int i = 1; i < tetris.getGameFieldLength(); i++)
-                if (!strncmp(test[i].c_str(), fullString.c_str(), tetris.getGameFieldWidth() + 1))  //  +1 - пушто рамочка
+                if (!strncmp(checkForFillingField[i].c_str(), fullString.c_str(), tetris.getGameFieldWidth() + 1))  //  +1 - пушто рамочка
                 {
                     tetris.BigBaDaBoom(i);
                     tetris.setScore(++score);
