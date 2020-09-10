@@ -631,12 +631,12 @@ int main()
     long core = std::chrono::system_clock::now().time_since_epoch().count();
     srand(core);
 
-    int nextFig = rand() % 7;   //  Фигур 7
+    int nextFig = rand() % static_cast<int>(Figure::figureName::figNumber);   //  Фигур 7
 
     while (isGame)
     {      
         Figure figure(static_cast<Figure::figureName>(nextFig));
-        nextFig = rand() % 7;
+        nextFig = rand() % static_cast<int>(Figure::figureName::figNumber);
 
         auto timeStart = std::chrono::system_clock::now();
         auto timeCheckStartRot = std::chrono::system_clock::now();
