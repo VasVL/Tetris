@@ -651,7 +651,13 @@ int main()
             timeCheckEndRot = std::chrono::system_clock::now();
             if (GetAsyncKeyState(65) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndRot - timeCheckStartRot).count() > timeForRotate))
             {       //      65 - A
-                //if (!tetris.isWallCollision(x, y, , 'l'), figure.getSize()))
+                Figure testRotationFigure(figure.getFigureName(), figure.getPositionX(), figure.getPositionY());
+                testRotationFigure.Rotate('l');
+                if ( !tetris.isWallCollision(
+                    testRotationFigure.getPositionX(), 
+                    testRotationFigure.getPositionY(), 
+                    testRotationFigure.getFigure(), 
+                    testRotationFigure.getSize()) )
                 {
                     figure.Rotate('l');
                     x = figure.getPositionX();
@@ -660,7 +666,13 @@ int main()
             }
             if (GetAsyncKeyState(68) && (std::chrono::duration_cast<std::chrono::milliseconds>(timeCheckEndRot - timeCheckStartRot).count() > timeForRotate))
             {       //      68 - D
-                //if (!tetris.isWallCollision(x, y, , 'r'), figure.getSize()))
+                Figure testRotationFigure(figure.getFigureName(), figure.getPositionX(), figure.getPositionY());
+                testRotationFigure.Rotate('r');
+                if (!tetris.isWallCollision(
+                    testRotationFigure.getPositionX(), 
+                    testRotationFigure.getPositionY(), 
+                    testRotationFigure.getFigure(), 
+                    testRotationFigure.getSize()) )
                 {
                     figure.Rotate('r');
                     x = figure.getPositionX();
